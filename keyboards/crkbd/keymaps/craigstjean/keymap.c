@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include <stdio.h>
- 
+
 enum layers {
     L_QWERTY,
     L_NUMPAD,
@@ -194,3 +194,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 #endif // OLED_ENABLE
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (biton32(state)) {
+        case L_QWERTY:
+            rgblight_enable_noeeprom();
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL);
+            break;
+        case L_NUMPAD:
+            rgblight_enable_noeeprom();
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+            rgblight_sethsv_noeeprom(HSV_RED);
+            break;
+        case L_SYMBOLS:
+            rgblight_enable_noeeprom();
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+            rgblight_sethsv_noeeprom(HSV_YELLOW);
+            break;
+        case L_NAV_FN:
+            rgblight_enable_noeeprom();
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+            rgblight_sethsv_noeeprom(HSV_GREEN);
+            break;
+        case L_COLEMAK_DH:
+            rgblight_enable_noeeprom();
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_CHRISTMAS);
+            break;
+        default:
+            rgblight_enable_noeeprom();
+            rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+            rgblight_sethsv_noeeprom(HSV_WHITE);
+            break;
+    }
+
+    return state;
+}
