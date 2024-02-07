@@ -20,25 +20,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>
 
 enum layers {
-    L_QWERTY,
+    L_COLEMAK_DH,
     L_NUMPAD,
     L_SYMBOLS,
     L_NAV_FN,
-    L_COLEMAK_DH
+    L_QWERTY
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [L_QWERTY] = LAYOUT_split_3x6_3(
+  [L_COLEMAK_DH] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_ESC,
+       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_BSPC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
+      KC_BSPC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, TT(L_SYMBOLS),
+      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, TT(L_SYMBOLS),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC, KC_LCTL,  TT(L_NAV_FN), KC_ENT, KC_LALT
+                                          KC_LGUI,  KC_SPC, KC_LCTL,  TT(L_NAV_FN),  KC_ENT, KC_LALT
                                       //`--------------------------'  `--------------------------'
-
   ),
 
   [L_NUMPAD] = LAYOUT_split_3x6_3(
@@ -73,19 +72,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
         KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          RGB_VAD, RGB_VAI, XXXXXXX,    _______, XXXXXXX, TG(L_COLEMAK_DH) 
+                                          RGB_VAD, RGB_VAI, XXXXXXX,    _______, XXXXXXX, TG(L_QWERTY) 
                                       //`--------------------------'  `--------------------------'
   ),
 
-  [L_COLEMAK_DH] = LAYOUT_split_3x6_3(
+  [L_QWERTY] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-       KC_TAB,    KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_ESC,
+       KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,   KC_ESC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_BSPC,    KC_A,    KC_R,    KC_S,    KC_T,    KC_G,                         KC_M,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
+      KC_BSPC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, TT(L_SYMBOLS),
+      KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, TT(L_SYMBOLS),
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI,  KC_SPC, KC_LCTL,  TG(L_COLEMAK_DH),  KC_ENT, KC_LALT
+                                          KC_LGUI,  KC_SPC, KC_LCTL,  TG(L_QWERTY), KC_ENT, KC_LALT
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -197,7 +196,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     switch (biton32(state)) {
-        case L_QWERTY:
+        case L_COLEMAK_DH:
             rgblight_enable_noeeprom();
             rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_SWIRL);
             break;
@@ -216,7 +215,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
             rgblight_sethsv_noeeprom(HSV_GREEN);
             break;
-        case L_COLEMAK_DH:
+        case L_QWERTY:
             rgblight_enable_noeeprom();
             rgblight_mode_noeeprom(RGBLIGHT_MODE_CHRISTMAS);
             break;
